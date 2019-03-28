@@ -4,6 +4,6 @@ run `docker build . -t [image_name]:[tag]`
 
 once image is built you can
 
-`docker run [image_name]:[tag] python scripts/classify_image.py \_\_tests\_\_/test_input.jpg`
+`docker run [image_name]:[tag] python scripts/classify_image.py __tests__/test_input.jpg`
 
 to see the result
