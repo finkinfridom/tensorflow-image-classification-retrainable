@@ -1,6 +1,6 @@
 FROM tensorflow/tensorflow:latest
 
-WORKDIR /tensorflow
+WORKDIR /tf
 
 ARG PHOTOS_FOLDER=./input_photos
 ARG TRAINING_STEPS=10000
@@ -14,9 +14,9 @@ RUN echo "PHOTOS_FOLDER: $PHOTOS_FOLDER" \
 
 RUN apt update && yes | \
     apt install git
-RUN git clone https://github.com/googlecodelabs/tensorflow-for-poets-2
+RUN git clone https://github.com/googlecodelabs/tensorflow-for-poets-2 git-repo
 
-WORKDIR /tensorflow/tensorflow-for-poets-2
+WORKDIR /tf/git-repo
 
 COPY $TESTS_FOLDER ./__tests__
 
