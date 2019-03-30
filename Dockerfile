@@ -12,19 +12,29 @@ RUN echo "PHOTOS_FOLDER: $PHOTOS_FOLDER" \
     echo "TESTS_FOLDER: $TESTS_FOLDER" \
     echo "TEST_FILE: $TEST_FILE"
 
-RUN apt update && yes | \
-    apt install git
-RUN git clone https://github.com/googlecodelabs/tensorflow-for-poets-2 git-repo
 
-WORKDIR /tf/git-repo
+RUN pip install tensorflow_hub
+
+
+# RUN apt update && yes | \
+#     apt install git
+# RUN git clone https://github.com/googlecodelabs/tensorflow-for-poets-2 git-repo
+
+# WORKDIR /tf/git-repo
 
 COPY $TESTS_FOLDER ./__tests__
 
-COPY ./scripts/classify_image.py ./scripts/classify_image.py
+COPY ./scripts/label_image.py ./scripts/label_image.py
+COPY ./scripts/retrain.py ./scripts/retrain.py
 
-CMD ["sh", "-c", "python scripts/retrain.py --bottleneck_dir=tf_files/bottlenecks \
+CMD ["sh", "-c", "python scripts/retrain.py --bottleneck_dir=/bottlenecks \
     --how_many_training_steps $TRAINING_STEPS \
-    --model_dir=tf_files/inception \
-    --output_graph=tf_files/retrained_graph.pb \
-    --output_labels=tf_files/retrained_labels.txt \
-    --image_dir ./tf_files/photos && python scripts/classify_image.py __tests__/$TEST_FILE" ]
+    --model_dir=/inception \
+    --output_graph=/retrained_graph.pb \
+    --output_labels=/retrained_labels.txt \
+    --image_dir ./photos && python scripts/label_image.py \
+    --graph=/retrained_graph.pb \
+    --labels=/retrained_labels.txt \
+    --input_layer=Placeholder \
+    --output_layer=final_result \
+    --image=__tests__/$TEST_FILE" ]
