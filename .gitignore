@@ -1,3 +1,4 @@
 .env
 _tmp
 input_photos
+tf_files/output
