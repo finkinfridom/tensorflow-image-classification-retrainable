@@ -9,7 +9,7 @@ RUN echo "TRAINING_STEPS: $TRAINING_STEPS" \
     echo "TEST_FILE: $TEST_FILE"
 
 
-RUN pip install tensorflow_hub Pillow
+RUN pip install tensorflow_hub
 
 COPY ./scripts ./scripts/
 
